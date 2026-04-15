@@ -59,7 +59,7 @@ public class DAOInmueble implements CRUD<Inmueble> {
 		Connection con = ConexionBD.getInstancia().getConexion();
 
 		String SQL_SELECT_APARTAMENTO = "SELECT  t.numero, t.fecha_compra, t.estado, "
-				+ "        ti.id AS propietario_id, ti.nombre AS propietario_nombre, " + "        d.numeroPiso "
+				+ "        ti.id AS propietario_id, ti.nombre AS propietario_nombre, " + "        d.numero_piso "
 				+ "FROM    inmueble_apto d " + "INNER JOIN inmueble  t  ON d.numero     = t.numero "
 				+ "INNER JOIN propietario  ti ON t.propietario_id = ti.id " + "WHERE   d.numero = ?";
 
