@@ -1,4 +1,4 @@
-package co.edu.poli.examen2_lopez;
+package co.edu.poli.examen2_lopez.vista;
 
 /**
  * Hello world!
