@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS propietario (
     numero        VARCHAR(20) NOT NULL COMMENT '@Id — PK compartida con subclases',
     
     -- @Column
-    fecha_compra  VARCHAR(20) NOT NULL COMMENT '@Column heredado — formato MM/AAAA',
+    fecha_compra  VARCHAR(20) NOT NULL COMMENT '@Column heredado — formato DD/MM/AAAA',
     
     -- @Column  true= alquilado | false= vendido
     estado        TINYINT(1)  NOT NULL DEFAULT 1 COMMENT '@Column heredado — 1 alquilado / 0 vendido',

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane prefHeight="300.0" prefWidth="650.0"
+         tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/25"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="co.edu.poli.examen2_lopez.controlador.ControlFormInmueble">
+
+  <tabs>
+
+    <!-- ================= CONSULTAR ================= -->
+    <Tab text="Consultar">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+          <children>
+
+            <TextField fx:id="txtInmueble1"
+                       layoutX="127.0" layoutY="38.0"
+                       promptText="Número inmueble" />
+
+            <Button fx:id="bttConsulta"
+                    layoutX="314.0" layoutY="38.0"
+                    prefHeight="25.0"
+                    prefWidth="144.0"
+                    mnemonicParsing="false"
+                    text="Consulta"
+                    onAction="#pressConsulta" />
+
+            <TextArea fx:id="txtAreaResultado"
+                      layoutX="69.0" layoutY="78.0"
+                      prefHeight="120.0" prefWidth="462.0"
+                      editable="false" />
+
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+
+    <!-- ================= CREAR ================= -->
+    <Tab text="Crear">
+      <content>
+        <AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="557.0">
+
+          <children>
+
+            <!-- Número inmueble -->
+            <TextField fx:id="txtInmueble2"
+                       layoutX="46.0" layoutY="50.0"
+                       promptText="Número inmueble" />
+
+            <!-- Fecha compra -->
+            <DatePicker fx:id="datepk1"
+                        layoutX="225.0" layoutY="50.0"
+                        prefWidth="150.0"
+                        promptText="Fecha compra" />
+
+            <!-- Propietario -->
+            <ComboBox fx:id="cmbPropietario"
+                      layoutX="408.0" layoutY="50.0"
+                      prefWidth="150.0" prefHeight="25.0"
+                      promptText="Propietario" />
+
+            <!-- Tipo -->
+            <ToggleGroup fx:id="tipoInmueble" />
+
+            <RadioButton fx:id="radioApartamento"
+                         prefWidth="200"
+                         layoutX="107.0" layoutY="125.0"
+                         mnemonicParsing="false"
+                         text="Apartamento"
+                         toggleGroup="$tipoInmueble"
+                         selected="true" />
+
+            <RadioButton fx:id="radioCasa"
+                         prefWidth="200"
+                         layoutX="270.0" layoutY="125.0"
+                         mnemonicParsing="false"
+                         text="Casa"
+                         toggleGroup="$tipoInmueble" />
+
+            <!-- Casa -->
+            <TextField fx:id="txtCantidadPisos"
+                       layoutX="46.0" layoutY="160.0"
+                       promptText="Cantidad de pisos (Casa)" />
+
+            <!-- Apartamento -->
+            <TextField fx:id="txtNumeroPiso"
+                       layoutX="225.0" layoutY="160.0"
+                       promptText="Número de piso (Apto)" />
+
+            <!-- Botón -->
+            <Button fx:id="bttCreacion"
+                    layoutX="408.0" layoutY="160.0"
+                    mnemonicParsing="false" 
+                    text="Creación"
+                    onAction="#pressCreacion" />
+
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+
+  </tabs>
+</TabPane>
