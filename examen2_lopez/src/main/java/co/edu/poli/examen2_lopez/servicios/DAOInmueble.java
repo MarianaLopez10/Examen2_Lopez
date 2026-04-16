@@ -1,80 +1,137 @@
 package co.edu.poli.examen2_lopez.servicios;
 
-import co.edu.poli.examen2_lopez.modelo.Casa;
-import co.edu.poli.examen2_lopez.modelo.Apartamento;
-import co.edu.poli.examen2_lopez.modelo.Inmueble;
-import co.edu.poli.examen2_lopez.modelo.Propietario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
+import co.edu.poli.examen2_lopez.modelo.Apartamento;
+import co.edu.poli.examen2_lopez.modelo.Casa;
+import co.edu.poli.examen2_lopez.modelo.Inmueble;
+import co.edu.poli.examen2_lopez.modelo.Propietario;
 
 public class DAOInmueble implements CRUD<Inmueble> {
 
     @Override
-	public String create(Inmueble t) throws Exception {
+    public String create(Inmueble i) throws Exception {
 
-		Connection con = ConexionBD.getInstancia().getConexion();
+        Connection con = ConexionBD.getInstancia().getConexion();
+        con.setAutoCommit(false);
 
-		con.setAutoCommit(false);
+        try {
 
-		String SQL_INSERT_INMUEBLE= "INSERT INTO inmueble (numero, fecha_compra, estado, propietario_id) "
-				+ "VALUES (?, ?, ?, ?)";
+			// CLASE Inmueble
+            String SQL_INSERT_INMUEBLE =
+                    "INSERT INTO inmueble (numero, fecha_compra, estado, propietario_id) VALUES (?, ?, ?, ?)";
 
-		PreparedStatement ps = con.prepareStatement(SQL_INSERT_INMUEBLE);
-		ps.setString(1, t.getNumero());
-		ps.setString(2, t.getFechaCompra());
-		ps.setBoolean(3, t.isEstado());
-		ps.setString(4, t.getPropietario().getId());
-		ps.executeUpdate();
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT_INMUEBLE);
+            ps.setString(1, i.getNumero());
+            ps.setString(2, i.getFechaCompra());
+            ps.setBoolean(3, i.isEstado());
+            ps.setString(4, i.getPropietario().getId());
+            ps.executeUpdate();
 
-        String SQL_INSERT_APARTAMENTO = "INSERT INTO inmueble_apto (numero, numero_piso) VALUES (?, ?)";
-		String SQL_INSERT_CASA= "INSERT INTO inmueble_casa (numero, cantidad_pisos) VALUES (?, ?)";
+			// CLASE Apartamento
+            String sql;
 
-		String sql = (t instanceof Apartamento) ? SQL_INSERT_APARTAMENTO : SQL_INSERT_CASA;
-		ps = con.prepareStatement(sql);
-		ps.setString(1, t.getNumero());
-        if (t instanceof Apartamento)
-			ps.setDouble(2, ((Apartamento) t).getNumeroPiso());
-		else
-			ps.setDouble(2, ((Casa) t).getCantidadPisos());
-		
-		try {
-			ps.executeUpdate();
-			con.commit();
-			return "✔ " + t.getClass().getSimpleName() + " [" + t.getNumero() + "] guardada correctamente.";
-		} catch (Exception e) {
-			con.rollback();
-			return e.getMessage();
-		} finally {
-			con.setAutoCommit(true);
-		}
-	}
+            if (i instanceof Apartamento) {
+                sql = "INSERT INTO inmueble_apto (numero, numero_piso) VALUES (?, ?)";
+            } else {
+                sql = "INSERT INTO inmueble_casa (numero, cantidad_pisos) VALUES (?, ?)";
+            }
+
+            ps = con.prepareStatement(sql);
+            ps.setString(1, i.getNumero());
+
+            if (i instanceof Apartamento) {
+                ps.setInt(2, ((Apartamento) i).getNumeroPiso());
+            } else {
+                ps.setInt(2, ((Casa) i).getCantidadPisos());
+            }
+
+            ps.executeUpdate();
+
+            con.commit();
+
+            return "✔ " + i.getClass().getSimpleName() +
+                    " [" + i.getNumero() + "] guardado correctamente.";
+
+        } catch (Exception e) {
+
+            con.rollback();
+            e.printStackTrace(); 
+
+            throw new RuntimeException("ERROR EN CREATE: " + e.getMessage(), e);
+
+        } finally {
+            con.setAutoCommit(true);
+        }
+    }
 
     @Override
-	public <K> Inmueble readone(K num) throws Exception {
+    public <K> Inmueble readone(K num) throws Exception {
 
-		Connection con = ConexionBD.getInstancia().getConexion();
+        Connection con = ConexionBD.getInstancia().getConexion();
 
-		String SQL_SELECT_APARTAMENTO = "SELECT  t.numero, t.fecha_compra, t.estado, "
-				+ "        ti.id AS propietario_id, ti.nombre AS propietario_nombre, " + "        d.numero_piso "
-				+ "FROM    inmueble_apto d " + "INNER JOIN inmueble  t  ON d.numero     = t.numero "
-				+ "INNER JOIN propietario  ti ON t.propietario_id = ti.id " + "WHERE   d.numero = ?";
+        // Consultar Apartamento
+        String SQL_APTO =
+                "SELECT i.numero, i.fecha_compra, i.estado, " +
+                "p.id AS propietario_id, p.nombre AS propietario_nombre, " +
+                "a.numero_piso " +
+                "FROM inmueble_apto a " +
+                "INNER JOIN inmueble i ON a.numero = i.numero " +
+                "INNER JOIN propietario p ON i.propietario_id = p.id " +
+                "WHERE a.numero = ?";
 
-		PreparedStatement ps = con.prepareStatement(SQL_SELECT_APARTAMENTO);
-		ps.setString(1, (String) num);
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) {
-			return new Apartamento(rs.getString("numero"), rs.getString("fecha_compra"), rs.getBoolean("estado"),
-					new Propietario(rs.getString("propietario_id"), rs.getString("propietario_nombre")), rs.getInt("numeroPiso"));
-		}
+        PreparedStatement ps = con.prepareStatement(SQL_APTO);
+        ps.setString(1, (String) num);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return new Apartamento(
+                    rs.getString("numero"),
+                    rs.getString("fecha_compra"),
+                    rs.getBoolean("estado"),
+                    new Propietario(
+                            rs.getString("propietario_id"),
+                            rs.getString("propietario_nombre")
+                    ),
+                    rs.getInt("numero_piso") // 👈 corregido nombre columna
+            );
+        }
+
+        // Consultar Casa
+        String SQL_CASA =
+                "SELECT i.numero, i.fecha_compra, i.estado, " +
+                "p.id AS propietario_id, p.nombre AS propietario_nombre, " +
+                "c.cantidad_pisos " +
+                "FROM inmueble_casa c " +
+                "INNER JOIN inmueble i ON c.numero = i.numero " +
+                "INNER JOIN propietario p ON i.propietario_id = p.id " +
+                "WHERE c.numero = ?";
+
+        ps = con.prepareStatement(SQL_CASA);
+        ps.setString(1, (String) num);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return new Casa(
+                    rs.getString("numero"),
+                    rs.getString("fecha_compra"),
+                    rs.getBoolean("estado"),
+                    new Propietario(
+                            rs.getString("propietario_id"),
+                            rs.getString("propietario_nombre")
+                    ),
+                    rs.getInt("cantidad_pisos")
+            );
+        }
+
         return null;
-	}
+    }
 
-	@Override
-	public List<Inmueble> readall() {
-		return null;
-	}
+    @Override
+    public List<Inmueble> readall() {
+        return null;
+    }
 }

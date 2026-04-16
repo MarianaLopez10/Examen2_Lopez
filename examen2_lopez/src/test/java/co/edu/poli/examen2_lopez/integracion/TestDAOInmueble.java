@@ -2,19 +2,44 @@ package co.edu.poli.examen2_lopez.integracion;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.Statement;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.edu.poli.examen2_lopez.modelo.*;
+import co.edu.poli.examen2_lopez.servicios.ConexionBD;
 import co.edu.poli.examen2_lopez.servicios.DAOInmueble;
+import co.edu.poli.examen2_lopez.servicios.DAOPropietario;
 
 public class TestDAOInmueble {
 
     DAOInmueble dao = new DAOInmueble();
+    DAOPropietario daoP = new DAOPropietario();
+
+    @BeforeEach
+    void clean() throws Exception{
+
+        Connection con = ConexionBD.getInstancia().getConexion();
+
+        con.setAutoCommit(false);
+
+        Statement st = con.createStatement();
+        
+        st.executeUpdate("DELETE FROM inmueble_apto");
+        st.executeUpdate("DELETE FROM inmueble_casa");
+        st.executeUpdate("DELETE FROM inmueble");
+        st.executeUpdate("DELETE FROM propietario");
+
+        con.setAutoCommit(true);
+    }
 
     @Test
     void create_casa_y_readone() throws Exception {
 
-        Propietario p = new Propietario("T001", "Test");
+        Propietario p = new Propietario("T005", "Test Mari");
+        daoP.create(p);
 
         Casa casa = new Casa(
                 "9001",
@@ -26,7 +51,7 @@ public class TestDAOInmueble {
 
         String result = dao.create(casa);
 
-        assertTrue(result.toLowerCase().contains("guard"));
+        assertTrue(result.contains("guardado"));
 
         Inmueble i = dao.readone("9001");
 
@@ -40,7 +65,8 @@ public class TestDAOInmueble {
     @Test
     void create_apartamento_y_readone() throws Exception {
 
-        Propietario p = new Propietario("T002", "Test");
+        Propietario p = new Propietario("T006", "Test Vale");
+         daoP.create(p);
 
         Apartamento apto = new Apartamento(
                 "9002",
@@ -52,7 +78,7 @@ public class TestDAOInmueble {
 
         String result = dao.create(apto);
 
-        assertTrue(result.toLowerCase().contains("guard"));
+        assertTrue(result.contains("guardado"));
 
         Inmueble i = dao.readone("9002");
 
