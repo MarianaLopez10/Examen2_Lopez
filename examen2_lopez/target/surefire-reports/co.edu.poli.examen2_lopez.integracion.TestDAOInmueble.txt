@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: co.edu.poli.examen2_lopez.integracion.TestDAOInmueble
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.527 s <<< FAILURE! -- in co.edu.poli.examen2_lopez.integracion.TestDAOInmueble
-co.edu.poli.examen2_lopez.integracion.TestDAOInmueble.create_casa_y_readone -- Time elapsed: 0.423 s <<< ERROR!
+Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.591 s <<< FAILURE! -- in co.edu.poli.examen2_lopez.integracion.TestDAOInmueble
+co.edu.poli.examen2_lopez.integracion.TestDAOInmueble.create_casa_y_readone -- Time elapsed: 0.507 s <<< ERROR!
 java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`examen2_lopez`.`inmueble`, CONSTRAINT `fk_inmueble_propietario` FOREIGN KEY (`propietario_id`) REFERENCES `propietario` (`id`) ON UPDATE CASCADE)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:113)
@@ -17,7 +17,7 @@ java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child 
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 
-co.edu.poli.examen2_lopez.integracion.TestDAOInmueble.create_apartamento_y_readone -- Time elapsed: 0.007 s <<< ERROR!
+co.edu.poli.examen2_lopez.integracion.TestDAOInmueble.create_apartamento_y_readone -- Time elapsed: 0.005 s <<< ERROR!
 java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`examen2_lopez`.`inmueble`, CONSTRAINT `fk_inmueble_propietario` FOREIGN KEY (`propietario_id`) REFERENCES `propietario` (`id`) ON UPDATE CASCADE)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:113)
