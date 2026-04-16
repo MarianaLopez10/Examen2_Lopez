@@ -1,0 +1,10 @@
+co\edu\poli\examen2_lopez\vista\App.class
+co\edu\poli\examen2_lopez\servicios\DAOInmueble.class
+co\edu\poli\examen2_lopez\modelo\Apartamento.class
+co\edu\poli\examen2_lopez\servicios\ConexionBD.class
+co\edu\poli\examen2_lopez\servicios\CRUD.class
+co\edu\poli\examen2_lopez\contolador\ControlFormProperty.class
+co\edu\poli\examen2_lopez\modelo\Propietario.class
+co\edu\poli\examen2_lopez\servicios\DAOPropietario.class
+co\edu\poli\examen2_lopez\modelo\Casa.class
+co\edu\poli\examen2_lopez\modelo\Inmueble.class

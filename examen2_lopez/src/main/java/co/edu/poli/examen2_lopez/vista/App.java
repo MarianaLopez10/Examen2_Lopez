@@ -15,7 +15,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/co/edu/poli/examen2_Soto/formCard.fxml"));
+		TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/co/edu/poli/examen2_lopez/formProperty.fxml"));
 		scene = new Scene(root);
 		stage.setTitle("Inmuebles");
 		stage.setResizable(false);
