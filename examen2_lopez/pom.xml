@@ -76,9 +76,8 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.6</version>
+                <version>0.0.8</version>
                 <configuration>
-                    <!-- ⚠️ AJUSTA ESTO SI CAMBIA TU PACKAGE -->
                     <mainClass>co.edu.poli.examen2_lopez.vista.App</mainClass>
                 </configuration>
             </plugin>
