@@ -7,7 +7,7 @@
          tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/25"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="co.edu.poli.examen2_lopez.controlador.ControlFormInmueble">
+         fx:controller="co.edu.poli.examen2_lopez.controlador.ControlFormProperty">
 
   <tabs>
 
@@ -63,9 +63,6 @@
                       layoutX="408.0" layoutY="50.0"
                       prefWidth="150.0" prefHeight="25.0"
                       promptText="Propietario" />
-
-            <!-- Tipo -->
-            <ToggleGroup fx:id="tipoInmueble" />
 
             <RadioButton fx:id="radioApartamento"
                          prefWidth="200"

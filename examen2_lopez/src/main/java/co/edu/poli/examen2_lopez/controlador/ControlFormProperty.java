@@ -1,4 +1,4 @@
-package co.edu.poli.examen2_lopez.contolador;
+package co.edu.poli.examen2_lopez.controlador;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,7 +40,7 @@ public class ControlFormProperty {
     @FXML
     private RadioButton radioApartamento;
     @FXML
-    private ToggleGroup tipo;
+    private ToggleGroup tipoInmueble;
 
     @FXML
     private TextField txtCantidadPisos;
